@@ -1,0 +1,162 @@
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÃÄ RGAPI v2.00 - Renegade API For PASCAL Programmers
+ÃÄ (c) Copyright 1994 By Jeff Fanjoy and MatrixSoft(tm).
+ÃÄ (c) Copyright 2024 The Renegade BBS Development Team
+ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÃÄ DISCLAIMER
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     I make no guarantees of any kind to the programmer who uses this API, or
+to the user who receives a program with this unit implemented.  This unit has
+worked for me for over a year while I have used it privately, and therefore I
+cannot foresee it having any problems with others.  However, I cannot possibly
+test the unit under every possible setup condition, therefore I cannot
+guarantee how well it will work under any given condition.  With this in mind,
+by using this unit, or any product made with this unit, I am not held
+responsible for any damages which may occur.
+
+     I strongly encourage all programmers who use this unit to make a similar
+notice in your program documentation to protect both mine and your interests.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÃÄ INTRODUCTION
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     The RGAPI unit was formed by the need for set routines to do some of the
+more tedious tasks in Renegade utility programming (such as open and closing
+files, reading records etc..).  This is the reason RGAPI was formed.  I made
+it so that no matter what program I was writing, I could easily and quickly
+access all of Renegade's data files, without having to go through the huge
+mess that comes with file handling.  The RGAPI does all the file handling for
+you, returning only the Input/Output result (IOResult) to let you know what
+happened.
+
+     THIS UNIT WAS NOT DESIGNED SO THAT AN AMATEUR COULD JUMP RIGHT IN TO
+PROGRAMMING FOR RENEGADE, IT WAS DESIGNED TO MAKE LIFE EASIER!  Ever since I
+first told a few people that I would be putting this package together, I have
+heard things like "great, now I don't need to learn that section to program
+for Renegade".  This is not the case, while it is possible to get by writing
+programs without the knowledge of what is going on, it is rather pointless to
+do so.  This unit uses some fairly complex ideas (since Renegade does, this
+unit must) and I would not encourage anybody who does not have a fair to good
+knowledge of Pascal (if an excellent knowledge then great) to use this.  It is
+not an amateur's toy, but rather a professional's tool.  Do not abuse the idea
+of this unit being there, as if you don't understand it, your programs could
+easily backfire because of this unit.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÃÄ PROCEDURES AND FUNCTIONS IN RGAPI
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     Now for the absolute pleasure of writing out what each and every
+procedure and function does.  Forgive me for the fact that I am going to group
+procedures and functions together as many procedures do the exact same thing
+except for different files, and I don't wish to re-type everything 25 times.
+
+     I will only be outlining the PROCEDURES and FUNCTIONS which would be used
+by programmers, even though others are in there and can be called if the
+programmer wishes.  A perfect example of this is the UNIX TIMESTAMP
+conversion.  There are 5 PROCEDURES/FUNCTIONS available, however, only three
+of them would normally have purpose of being called by the programmer, so only
+those three will have write-ups in here.  If you feel you must know what
+others do, contact me and I will tell you.
+
+     I wish to acknowledge SWAG and Brian Stark of Digital Illusions for the
+UNIX time routines.
+
+ÚÄÄ FUNCTION LZero(W: Word): String;
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     This FUNCTION returns a STRING which will have the number passed to it
+with a leading zero.  It will only attach a leading zero if the number is 1
+digit.  For example, if "8" is passed, LZero will return "08", if "12" is
+passed, LZero will return "12".
+
+ÚÄÄ FUNCTION Norm2Unix(Y, M, D, H, Min, S: Word): LongInt;
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     This FUNCTION takes the date and time in DOS format, and returns a UNIX
+TIMESTAMP in LongInt (Long Integer) format taking into account everything from
+Leap Years to Time Zone's.
+
+ÚÄÄ PROCEDURE Unix2Norm(Date: LontInt; VAR Y, M, D, H, Min, S: Word);
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     This PROCEDURE takes the date and time in UNIX TIMESTAMP format and
+returns the date in DOS format with Year, Month, Day, Hour, Minute and Second.
+
+ÚÄÄ FUNCTION TodayInUnix: LongInt;
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     This FUNCTION merely access' DOS and gets the Date and Time, then calls
+the Norm2Unix function to save the programmer time if s/he is using the
+current date/time as their computer states it.
+
+ÚÄÄ PROCEDURE WriteColor(VAR SchemeDatIn: SchemeRec; VAR InStr);
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     This PROCEDURE changes the colors while writing a STRING from Renegade to
+the screen.  It has the ability to use both pipe (|) and carat (^) color
+codes.  Because the (^) codes are from SCHEME.DAT, that file must be opened
+prior to using this PROCEDURE and a VARIABLE of TYPE SchemeRec must be passed
+to the PROCEDURE.
+
+ÚÄÄ FUNCTION StripColor(VAR InStr): String;
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     This FUNCTION strips all color codes from the STRING passed to it,
+allowing Renegade STRINGS to be displayed in any color the programmer wishes
+to use.
+
+ÚÄÄ PROCEDURES FOR OPENING DATA FILES
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     The PROCEDURES for opening any of the data files, are named specifically
+by the file being opened.  For example, RENEGADE.DAT is opened by calling the
+OpenRenegadeDat PROCEDURE.  All of the open PROCEDURES require a PATH, and an
+Errorlevel variable to be passed, and a couple of them require a filename as
+well (such as opening *.HDR and *.DIR files).
+
+ÚÄÄ PROCEDURES FOR READING DATA FILES
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     The PROCEDURES for reading any of the data files, are named in the same
+fashion as opening the files.  These PROCEDURES require that a variable of the
+file type be passed, and some even require that a record number be passed (the
+lowest record number being 0).
+
+ÚÄÄ PROCEDURES FOR WRITING DATA FILES
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     The PROCEDURES for writing any of the data files works exactly as the
+reading.
+
+ÚÄÄ PROCEDURES FOR CLOSING DATA FILES
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     The PROCEDURES for closing any of the data files works simply by calling
+the procedure in the same fashion as opening, where the format for
+RENEGADE.DAT would be CloseRenegadeDat.
+
+ÚÄÄ PROCEDURE FileDate(S: String; VAR Y, M, D: Word);
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     This PROCEDURE takes the date in STRING format from the files listings
+and converts it to WORD VARIABLES to be manipulated in that fashion.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÃÄ REGISTRATION
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     RGAPI is a PUBLIC DOMAIN product.  That means that anybody is free to
+modify and use this product at their own personal whim.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÃÄ CONTACTING THE RENEGADE DEV TEAM
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+     The Renegade BBS Dev Team can be contacted via our support bbs:
+
+     The Titantic BBS Telnet        telnet://ttb.rgbbs.info
+
+     Or via the web @  http://www.rgbbs.info
